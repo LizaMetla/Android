@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:backgroundTint="@color/grey"
+    tools:context=".FragmentMusic">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="10dp"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/button_add_music"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Add music" />
+
+        <FrameLayout
+            android:id="@+id/frame_for_music"
+            android:layout_width="match_parent"
+            android:layout_height="0dp">
+
+        </FrameLayout>
+
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rcv_music"
+            android:layout_width="match_parent"
+            android:layout_height="477dp">
+
+        </androidx.recyclerview.widget.RecyclerView>
+
+    </LinearLayout>
+
+</FrameLayout>
