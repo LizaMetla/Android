@@ -30,7 +30,6 @@ public class DetailPostActivity extends AppCompatActivity {
     private Button backBtn, deleteBtn;
     private ImageView postPhoto;
     private TextView titleText, descriptionText, linkText;
-    private WebView webView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,7 +92,6 @@ public class DetailPostActivity extends AppCompatActivity {
     }
     public void secondServiceCall(String url)
     {
-        // use this var membershipid acc to your need ...
         RequestQueue queue = Volley.newRequestQueue(this);
 
         ImageRequest ir = new ImageRequest(url, new Response.Listener<Bitmap>() {
@@ -107,7 +105,6 @@ public class DetailPostActivity extends AppCompatActivity {
             public void onErrorResponse(VolleyError error) {
             }
         });
-        // 100 is your custom Size before Downloading the Image.
         queue.add(ir);
     }
 

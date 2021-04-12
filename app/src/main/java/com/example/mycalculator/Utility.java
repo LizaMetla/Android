@@ -36,7 +36,7 @@ import java.util.BitSet;
 import java.util.Map;
 
 public class Utility {
-    public static Boolean isDeleteFile = true;
+    public static Boolean isDeleteFile = false;
     public static String key = "bananas";
     public static String keyBase = "29B3D2FE4F79426DBF14338FA72F048F";
     private static Boolean isCompress = false;

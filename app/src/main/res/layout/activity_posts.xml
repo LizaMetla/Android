@@ -6,16 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".PostsActivity">
 
-<!--    <Button-->
-<!--        android:id="@+id/add_post_btn_id"-->
-<!--        android:layout_width="88dp"-->
-<!--        android:layout_height="65dp"-->
-<!--        android:text="Add"-->
-<!--        app:layout_constraintBottom_toTopOf="@+id/rcv_posts"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintHorizontal_bias="0.498"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toTopOf="parent" />-->
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rcv_posts"
@@ -27,18 +17,6 @@
 
     </androidx.recyclerview.widget.RecyclerView>
 
-<!--    <com.google.android.material.floatingactionbutton.FloatingActionButton-->
-<!--        android:id="@+id/add_post_btn_id"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_marginBottom="44dp"-->
-<!--        android:backgroundTint="@color/orange"-->
-<!--        android:clickable="true"-->
-<!--        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintHorizontal_bias="0.908"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:srcCompat="@android:drawable/ic_menu_add" />-->
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

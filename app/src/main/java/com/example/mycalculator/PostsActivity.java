@@ -39,8 +39,6 @@ import java.util.Map;
 
 public class PostsActivity extends AppCompatActivity {
     PostsAdapter postsAdapter;
-    //Button addPostBtn;
-//    FloatingActionButton addPostBtn;
     RecyclerView rcvAudio;
     private ArrayList<Post> mListPosts = new ArrayList<Post>();
     private final int resultAdd = 3;
@@ -49,9 +47,6 @@ public class PostsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_posts);
-//        addPostBtn = findViewById(R.id.add_post_btn_id);
-
-
         // создаем адаптер
         postsAdapter = new PostsAdapter(getApplicationContext(), mListPosts, new PostsAdapter.RecycleItemClickListener() {
             //обработчик на нажатие поста из списка
@@ -63,8 +58,8 @@ public class PostsActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-        String maxPrice = "1000";
-        String minPrice = "200";
+        String maxPrice = "5000";
+        String minPrice = "100";
         RequestQueue queue = Volley.newRequestQueue(this);
         String url = "https://r.onliner.by/sdapi/ak.api/search/apartments?price%5Bmin%5D=" + minPrice + "&price%5Bmax%5D=" + maxPrice + "&currency=usd&bounds%5Blb%5D%5Blat%5D=53.765346858917425&bounds%5Blb%5D%5Blong%5D=27.413028708853112&bounds%5Brt%5D%5Blat%5D=54.03091474781306&bounds%5Brt%5D%5Blong%5D=27.711908525658554&page=1&v=0.15562999284261325";
 
@@ -87,11 +82,14 @@ public class PostsActivity extends AppCompatActivity {
                                 String currency = jsonObject.getJSONObject("price").getString("currency");
                                 String description = "Цена: " + price + ((owner) ? "\nСобственник" : "Агентство");
                                 mListPosts.add(new Post(image, photoUrl, description, title, link, owner, price, currency));
-                                secondServiceCall(mListPosts.size() - 1, photoUrl);
                             }
                             postsAdapter.setArray(mListPosts);
                             Utility.savePostsInFile(getApplicationContext(), mListPosts);
                             postsAdapter.notifyDataSetChanged();
+                            for (int i = 0; i<mListPosts.size(); i++){
+                                secondServiceCall(i, mListPosts.get(i).selectedImagePath);
+                            }
+
                         } catch (Exception e){
                             e.printStackTrace();
                         }
@@ -128,22 +126,18 @@ public class PostsActivity extends AppCompatActivity {
             mListPosts = Utility.getPostsList(getApplicationContext());
             if(mListPosts.size() == 0){
                 queue.add(stringRequest);
+            }else {
+                postsAdapter.setArray(mListPosts);
+                for (int i = 0; i<mListPosts.size(); i++){
+                    secondServiceCall(i, mListPosts.get(i).selectedImagePath);
+                }
             }
-            postsAdapter.setArray(mListPosts);
         } catch (IOException e) {
             e.printStackTrace();
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
-
-//        addPostBtn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(PostsActivity.this, AddPostActivity.class);
-//                startActivityForResult(intent, resultAdd);
-//            }
-//        });
     }
     public void secondServiceCall(int membershipid,String url)
     {
@@ -159,7 +153,6 @@ public class PostsActivity extends AppCompatActivity {
                 mListPosts.set(membershipid, post);
                 postsAdapter.setArray(mListPosts);
                 postsAdapter.notifyDataSetChanged();
-
             }
         }, 0, 0, ImageView.ScaleType.CENTER_CROP, Bitmap.Config.RGB_565, new Response.ErrorListener() {
             @Override
