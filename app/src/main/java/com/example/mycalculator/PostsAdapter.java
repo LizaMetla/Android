@@ -55,8 +55,6 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.PostsAdepter
     public void onBindViewHolder(@NonNull PostsAdepterHolder holder, int position) {
         Post post = mListPosts.get(position);
         if(post!=null){
-
-
             holder.title.setText(post.title);
             holder.imgPhoto.setImageBitmap(post.image);
             holder.link.setText(post.link);

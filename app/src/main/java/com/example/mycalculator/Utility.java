@@ -1,10 +1,22 @@
 package com.example.mycalculator;
+
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.StrictMode;
+
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 
@@ -12,14 +24,19 @@ import java.io.FileOutputStream;
 
 import java.io.IOException;
 
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.BitSet;
 import java.util.Map;
 
 public class Utility {
-    public static Boolean isDeleteFile = false;
+    public static Boolean isDeleteFile = true;
     public static String key = "bananas";
     public static String keyBase = "29B3D2FE4F79426DBF14338FA72F048F";
     private static Boolean isCompress = false;
@@ -39,12 +56,14 @@ public class Utility {
         String converted = String.format("%d:%02d", minutes, seconds);
         return converted;
     }
+
     public static ArrayList<Post> deletePostInList(Context context, int position) throws IOException, JSONException {
         ArrayList<Post> array = getPostsList(context);
         array.remove(position);
         savePostsInFile(context, array);
         return array;
     }
+
     public static ArrayList<Post> savePostInList(Context context, Post post) throws IOException, JSONException {
         ArrayList<Post> array = getPostsList(context); // получение списка постов из файла
         array.add(post);  // добавление в общий список только что созданного поста
@@ -64,10 +83,10 @@ public class Utility {
             if (response.isEmpty()) {
                 return postsList;
             }
-            if (Utility.isCompress){
+            if (Utility.isCompress) {
                 inputBytes = uncompress(inputBytes, context); // разархивация байтов из файла методом Хоффмана
                 response = new String(inputBytes);
-            }else {
+            } else {
                 response = Utility.deCrypto(inputBytes); // декодирование байтов одним из указанных в Utility.selectAlgorithm методов
             }
             postsList = Utility.convertFromJsonString(response, context); // получение списка постов из декодированной (или разархивированной) строки
@@ -82,42 +101,45 @@ public class Utility {
 
     }
 
-    private static void savePostsInFile(Context context, ArrayList<Post> array) throws JSONException, IOException {
+
+    public static void savePostsInFile(Context context, ArrayList<Post> array) throws JSONException, IOException {
         String userString = convertToJsonString(array, context); // конвертация списка постов в строку через json
         File file = new File(context.getFilesDir(), Utility.storage); // - создание исходного файла
         FileOutputStream outputStream = new FileOutputStream(file);   //
         byte[] outputBytes;
-        if (Utility.isCompress){
+        if (Utility.isCompress) {
             outputBytes = Utility.compress(userString.getBytes(), context); // сжатие данных методом Хоффмана
-        }else {
+        } else {
             outputBytes = Utility.enCrypto(userString); // шифрование строки одним из указанных в Utility.selectAlgorithm методов
         }
         outputStream.write(outputBytes); // - запись зашифрованный (или сжатых) байтов в файл
         outputStream.close();            // - закрытие файла
         Utility.saveNotDecrypt(context, userString); // запись исходно (не сжатой и не шифрованной) строки в файл Utility.storageNotEncrypted
     }
-    private static byte[] compress(byte[] inputBytes, Context context){
-        Map<Character,Integer> charFreq = Huffman.CharacterFrequency(new String(inputBytes));
+
+    private static byte[] compress(byte[] inputBytes, Context context) {
+        Map<Character, Integer> charFreq = Huffman.CharacterFrequency(new String(inputBytes));
         Huffman huffman = Huffman.Create(charFreq);
         try {
             Utility.WriteObjectToFile(context, charFreq);
-        } catch (Exception e){
+        } catch (Exception e) {
 
         }
 
         return huffman.Encode(new String(inputBytes)).toByteArray();
     }
-    private static byte[] uncompress(byte[] inputBytes, Context context){
+
+    private static byte[] uncompress(byte[] inputBytes, Context context) {
         try {
-            Map<Character,Integer> charFreq = ( Map<Character,Integer>)Utility.ReadObjectFromFile(context);
+            Map<Character, Integer> charFreq = (Map<Character, Integer>) Utility.ReadObjectFromFile(context);
             BitSet bitset = BitSet.valueOf(inputBytes);
             Huffman huffman = Huffman.Create(charFreq);
             return huffman.Decode(bitset).getBytes();
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             return new byte[0];
         }
     }
+
     private static String convertToJsonString(ArrayList<Post> array, Context context) throws JSONException {
         JSONArray ja = new JSONArray();
         for (Post post : array) {
@@ -138,15 +160,17 @@ public class Utility {
         }
         return postsList;
     }
-    private static void saveNotDecrypt(Context context, String message){
-        try{
+
+    private static void saveNotDecrypt(Context context, String message) {
+        try {
             File file = new File(context.getFilesDir(), Utility.storageNotEncrypted);
             FileOutputStream outputStream = new FileOutputStream(file);
             outputStream.write(message.getBytes());
             outputStream.close();
+        } catch (Exception e) {
         }
-        catch (Exception e){}
     }
+
     public static void WriteObjectToFile(Context context, Object _object) throws IOException {
         File file = new File(context.getFilesDir(), Utility.storageMap);
         FileOutputStream outputStream = new FileOutputStream(file);

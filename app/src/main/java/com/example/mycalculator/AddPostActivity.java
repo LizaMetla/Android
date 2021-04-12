@@ -83,7 +83,7 @@ public class AddPostActivity extends AppCompatActivity {
                 } else if (linkText.getText().toString().isEmpty()) {
                     showError(linkText, "Link is not valid!");
                 } else {
-                    post = new Post(selectedImage, selectedImagePath, descriptionText.getText().toString(), titleText.getText().toString(), linkText.getText().toString(), song);
+                    post = new Post(selectedImage, selectedImagePath, descriptionText.getText().toString(), titleText.getText().toString(), linkText.getText().toString(), false, 0.0, "USD");
                     try {
                         Utility.savePostInList(getApplicationContext(),post);
                     } catch (IOException e) {
