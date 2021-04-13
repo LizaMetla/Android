@@ -58,7 +58,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.PostsAdepter
             holder.title.setText(post.title);
             holder.imgPhoto.setImageBitmap(post.image);
             holder.link.setText(post.link);
-            holder.description.setText(post.description);
+            holder.description.setText(post.getPostDescription());
             holder.bind(post, listener);
         }
     }

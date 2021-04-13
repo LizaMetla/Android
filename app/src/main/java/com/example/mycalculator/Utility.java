@@ -36,7 +36,7 @@ import java.util.BitSet;
 import java.util.Map;
 
 public class Utility {
-    public static Boolean isDeleteFile = false;
+    public static Boolean isDeleteFile = true;
     public static String key = "bananas";
     public static String keyBase = "29B3D2FE4F79426DBF14338FA72F048F";
     private static Boolean isCompress = false;
@@ -70,7 +70,12 @@ public class Utility {
         savePostsInFile(context, array); // сохранение списка постов в файл
         return array;
     }
-
+    public static ArrayList<Post> savePostInList(Context context, Post post, Integer position) throws IOException, JSONException {
+        ArrayList<Post> array = getPostsList(context); // получение списка постов из файла
+        array.set(position, post);  // добавление в общий список только что созданного поста
+        savePostsInFile(context, array); // сохранение списка постов в файл
+        return array;
+    }
     public static ArrayList<Post> getPostsList(Context context) throws IOException, JSONException { // получение списка постов из файла
         ArrayList<Post> postsList = new ArrayList<Post>();
         File file = new File(context.getFilesDir(), Utility.storage);

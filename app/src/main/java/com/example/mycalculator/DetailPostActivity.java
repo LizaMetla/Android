@@ -27,15 +27,17 @@ import java.util.ArrayList;
 
 public class DetailPostActivity extends AppCompatActivity {
     private Post post;
-    private Button backBtn, deleteBtn;
+    private Button backBtn, deleteBtn, editBtn;
     private ImageView postPhoto;
     private TextView titleText, descriptionText, linkText;
 
+
+    Integer position;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_post);
-        Integer position = (Integer) getIntent().getSerializableExtra("position");
+        position = (Integer) getIntent().getSerializableExtra("position");
         try {
             ArrayList<Post> mListPosts = Utility.getPostsList(getApplicationContext());
             post = mListPosts.get(position);
@@ -63,6 +65,21 @@ public class DetailPostActivity extends AppCompatActivity {
                 }
             });
 
+            editBtn = findViewById(R.id.detail_edit_button);
+            editBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    try {
+
+                        Intent intent = new Intent(DetailPostActivity.this, EditPostActivity.class);
+                        intent.putExtra("position", position);
+                        startActivity(intent);
+                    }  catch (Exception e){
+                        Toast.makeText(getApplicationContext(), "Sorry, I can't edit this post", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
+
             postPhoto = findViewById(R.id.detail_photo_card);
 
 
@@ -70,7 +87,7 @@ public class DetailPostActivity extends AppCompatActivity {
             titleText.setText(post.title);
 
             descriptionText = findViewById(R.id.detail_description);
-            descriptionText.setText(post.description);
+            descriptionText.setText(post.getPostDescription());
 
             linkText = findViewById(R.id.detail_link);
             linkText.setText(post.link);

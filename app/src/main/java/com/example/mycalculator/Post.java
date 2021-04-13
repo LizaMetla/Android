@@ -55,20 +55,20 @@ public class Post implements Serializable {
 
         return postJson;
     }
-
+    public static String getDescriptionFromServer(JSONObject response) throws JSONException {
+        return ((response.has("description") && !response.isNull("description"))) ? response.getString("description") : null;
+    }
+    public String getPostDescription(){
+        if(this.description == null || this.description.isEmpty()){
+            return "Цена: " + this.price + ((this.owner) ? "\nСобственник" : "\nАгентство");
+        }else {
+            return this.description;
+        }
+    }
     public static Post getPostFromJson(JSONObject jo, Context context) throws JSONException {
         return new Post(null,
-                jo.getString("selectedImagePath"), jo.getString("description"), jo.getString("title"),
+                jo.getString("selectedImagePath"), getDescriptionFromServer(jo), jo.getString("title"),
                 jo.getString("link"), jo.getBoolean("owner"), jo.getDouble("price"), jo.getString("currency"));
     }
 
-    public static Bitmap getBitmapFromString(String stringPicture, Context context) {
-        try {
-            InputStream in = new java.net.URL(stringPicture).openStream();
-            return BitmapFactory.decodeStream(in);
-        } catch (Exception e) {
-            return BitmapFactory.decodeFile(stringPicture);
-        }
-
-    }
 }

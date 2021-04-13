@@ -14,7 +14,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Design.NoActionBar">
-        <activity android:name=".WebViewActivity"></activity>
+        <activity android:name=".EditPostActivity"></activity>
+        <activity android:name=".WebViewActivity" />
         <activity android:name=".AddPostActivity" />
         <activity android:name=".DetailPostActivity" />
         <activity android:name=".PostsActivity" />

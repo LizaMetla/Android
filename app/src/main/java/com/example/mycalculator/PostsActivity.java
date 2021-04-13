@@ -80,8 +80,7 @@ public class PostsActivity extends AppCompatActivity {
                                 Boolean owner = jsonObject.getJSONObject("contact").getBoolean("owner");
                                 Double price = jsonObject.getJSONObject("price").getDouble("amount");
                                 String currency = jsonObject.getJSONObject("price").getString("currency");
-                                String description = "Цена: " + price + ((owner) ? "\nСобственник" : "Агентство");
-                                mListPosts.add(new Post(image, photoUrl, description, title, link, owner, price, currency));
+                                mListPosts.add(new Post(image, photoUrl, null, title, link, owner, price, currency));
                             }
                             postsAdapter.setArray(mListPosts);
                             Utility.savePostsInFile(getApplicationContext(), mListPosts);
