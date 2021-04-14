@@ -29,7 +29,7 @@ public class DetailPostActivity extends AppCompatActivity {
     private Post post;
     private Button backBtn, deleteBtn, editBtn;
     private ImageView postPhoto;
-    private TextView titleText, descriptionText, linkText;
+    private TextView titleText, descriptionText, linkText, price, currency, isOwner ;
 
 
     Integer position;
@@ -85,6 +85,15 @@ public class DetailPostActivity extends AppCompatActivity {
 
             titleText = findViewById(R.id.detail_title);
             titleText.setText(post.title);
+
+            price = findViewById(R.id.priceTextView);
+            price.setText(String.valueOf(post.price));
+
+            currency = findViewById(R.id.currencyTextView);
+            currency.setText(post.currency);
+
+            isOwner = findViewById(R.id.isOwnerTextView);
+            isOwner.setText(((post.owner) ? "Да" : "Нет"));
 
             descriptionText = findViewById(R.id.detail_description);
             descriptionText.setText(post.getPostDescription());

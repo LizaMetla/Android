@@ -59,6 +59,9 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.PostsAdepter
             holder.imgPhoto.setImageBitmap(post.image);
             holder.link.setText(post.link);
             holder.description.setText(post.getPostDescription());
+            holder.price.setText(String.valueOf(post.price));
+            holder.currency.setText(post.currency);
+            holder.isOwner.setText(((post.owner) ? "Да" : "Нет"));
             holder.bind(post, listener);
         }
     }
@@ -77,13 +80,17 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.PostsAdepter
     public class PostsAdepterHolder extends RecyclerView.ViewHolder {
 
         private ImageView imgPhoto;
-        private TextView title, artist, duration, description, link;
+        private TextView title, artist, duration, description, link, price, currency, isOwner;
         public PostsAdepterHolder(@NonNull View itemView) {
             super(itemView);
             imgPhoto = itemView.findViewById(R.id.postImage);
             title = itemView.findViewById(R.id.titlePostText);
             description = itemView.findViewById(R.id.descriptionPostText);
             link = itemView.findViewById(R.id.linkPostText);
+            price = itemView.findViewById(R.id.priceTextView);
+            currency = itemView.findViewById(R.id.currencyTextView);
+            isOwner = itemView.findViewById(R.id.isOwnerTextView);
+
 
         }
         // позволяет перехватывать события кликов

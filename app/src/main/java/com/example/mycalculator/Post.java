@@ -60,7 +60,7 @@ public class Post implements Serializable {
     }
     public String getPostDescription(){
         if(this.description == null || this.description.isEmpty()){
-            return "Цена: " + this.price + ((this.owner) ? "\nСобственник" : "\nАгентство");
+            return "";
         }else {
             return this.description;
         }
