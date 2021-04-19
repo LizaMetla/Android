@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".EditPostActivity">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:paddingHorizontal="10dp"
+            android:paddingVertical="10dp">
+
+            <Button
+                android:id="@+id/add_back_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="BACK"
+                android:backgroundTint="@color/orange"/>
+
+            <ImageView
+                android:id="@+id/flat_photo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxHeight="400dp"
+                android:minHeight="200dp"
+
+                app:srcCompat="@android:drawable/ic_menu_gallery" />
+
+
+            <EditText
+                android:id="@+id/edit_url_link"
+                android:layout_width="match_parent"
+                android:textSize="40sp"
+                android:layout_height="wrap_content"
+                android:hint="Url image" />
+
+            <EditText
+                android:id="@+id/edit_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="40sp"
+                android:hint="Title" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/editPrice"
+                    android:layout_width="412dp"
+                    android:layout_height="wrap_content"
+                    android:hint="Price"
+                    android:inputType="numberDecimal"
+                    android:textSize="40sp" />
+
+                <EditText
+                    android:id="@+id/editValute"
+                    android:layout_width="466dp"
+                    android:layout_height="wrap_content"
+                    android:hint="Valute"
+                    android:textSize="40sp" />
+            </LinearLayout>
+
+            <EditText
+                android:id="@+id/editLink"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="40sp"
+                android:hint="Link" />
+            <EditText
+                android:id="@+id/editDescription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="40sp"
+                android:hint="Description" />
+
+            <CheckBox
+                android:id="@+id/checkBoxOwner"
+                android:layout_width="match_parent"
+                android:textSize="35sp"
+                android:layout_height="wrap_content"
+                android:text="Apartment owner" />
+
+            <Button
+                android:id="@+id/edit_confirm_save"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="20dp"
+                android:background="@color/orange"
+                android:gravity="center_horizontal|center_vertical"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:textSize="30sp"
+                android:text="Confirm edit" />
+
+
+        </LinearLayout>
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
