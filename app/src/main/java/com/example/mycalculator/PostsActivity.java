@@ -64,14 +64,14 @@ public class PostsActivity extends AppCompatActivity {
         String url = "https://r.onliner.by/sdapi/ak.api/search/apartments?price%5Bmin%5D=" + minPrice + "&price%5Bmax%5D=" + maxPrice + "&currency=usd&bounds%5Blb%5D%5Blat%5D=53.765346858917425&bounds%5Blb%5D%5Blong%5D=27.413028708853112&bounds%5Brt%5D%5Blat%5D=54.03091474781306&bounds%5Brt%5D%5Blong%5D=27.711908525658554&page=1&v=0.15562999284261325";
 
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
-                new Response.Listener<String>() {
+                new Response.Listener<String>() { //слушатель ответа от онлайнера
                     @Override
                     public void onResponse(String responseString) {
-                        // Display the first 500 characters of the response string.
+
                         try {
                             JSONObject response = new JSONObject(responseString);
                             JSONArray jsonArray = response.getJSONArray("apartments");
-                            for (int i = 0; i < 10; i++) {
+                            for (int i = 0; i < 10; i++) { // разбор 10 первых постов из onliner
                                 JSONObject jsonObject = jsonArray.getJSONObject(i);
                                 String photoUrl = jsonObject.getString("photo");
                                 Bitmap image = null;
@@ -82,10 +82,10 @@ public class PostsActivity extends AppCompatActivity {
                                 String currency = jsonObject.getJSONObject("price").getString("currency");
                                 mListPosts.add(new Post(image, photoUrl, null, title, link, owner, price, currency));
                             }
-                            postsAdapter.setArray(mListPosts);
-                            Utility.savePostsInFile(getApplicationContext(), mListPosts);
-                            postsAdapter.notifyDataSetChanged();
-                            for (int i = 0; i<mListPosts.size(); i++){
+                            postsAdapter.setArray(mListPosts); // передаём посты без картинок в адаптер
+                            Utility.savePostsInFile(getApplicationContext(), mListPosts); // сохраняем посты без картинок в файл
+                            postsAdapter.notifyDataSetChanged(); //отрисовываем переданные посты пользователю
+                            for (int i = 0; i<mListPosts.size(); i++){  // дозапрос картинок по ссылкам из постов
                                 secondServiceCall(i, mListPosts.get(i).selectedImagePath);
                             }
 
@@ -147,9 +147,9 @@ public class PostsActivity extends AppCompatActivity {
             @Override
             public void onResponse(Bitmap response) {
                 // callback
-                Post post = mListPosts.get(membershipid);
-                post.image = response;
-                mListPosts.set(membershipid, post);
+                Post post = mListPosts.get(membershipid);//берём id поста из списка
+                post.image = response; //полученный ответ сохраняем в пост
+
                 postsAdapter.setArray(mListPosts);
                 postsAdapter.notifyDataSetChanged();
             }
